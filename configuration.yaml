@@ -1,0 +1,111 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 201
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/New_York
+
+
+# Show links to resources in log and frontend
+# introduction:
+
+# Enables the frontend
+frontend:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  # api_password: PASSWORD
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Weather Prediction
+sensor:
+  platform: yr
+
+# Device Tracker
+#device_tracker:
+#  - platform: nmap_tracker
+#    hosts: !secret DT_hosts
+
+# Google Text to Speach
+tts:
+  - platform: google
+    cache: true
+    cache_dir: /tmp/tts
+    time_memory: 300
+
+# IFTTT
+ifttt:
+    key:!secret IFTTT_key
+    
+# Neurio
+sensor_neurio:
+  platform: neurio_energy
+  api_key: !secret api_key
+  api_secret: !secret api_secret
+
+wemo:
+  static:
+    - !secret Static
+  
+  # Media players
+media_player:
+  - platform: webostv
+    host: !secret LG_host
+    mac: !secret LG_mac
+    name: TV
+  - platform: kodi
+    host: !secret Kodi_host
+    port: 80
+    name: Kodi
+    turn_off_action: restart
+
+#### VIEWS
+group:
+ Living_Room_View:
+    name: Living Room
+    icon: mdi:home-outline
+    view: yes
+    entities:
+      - group.living_room
+ upstairs_view:
+    name: Upstairs
+    icon: mdi:account-multiple
+    view: yes
+    entities:
+      - group.upstairs
+#### GROUPS
+ living_room:
+    name: Living Room
+    entities:
+      - switch.living_room_
+      - media_player.tv
+      - media_player.living_room_home
+ upstairs:
+    name: Upstairs
+    entities:
+      - media_player.kreams_cast
+      - media_player.master_bedroom_home
+      - media_player.rents_room
